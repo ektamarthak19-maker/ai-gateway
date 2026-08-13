@@ -1,0 +1,34 @@
+{
+  "name": "AI Gateway Dev Environment",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  
+  // Customizations for VS Code in Codespaces
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "humao.rest-client"
+      ]
+    }
+  },
+
+  // Forward port 8000 automatically and set its label
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "AI Gateway Port",
+      "onAutoForward": "notify"
+    }
+  },
+
+  // Command to automatically run when the container finishes building
+  "postAttachCommand": "uvicorn main:app --reload --host 0.0.0.0 --port 8000"
+}
